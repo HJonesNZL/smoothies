@@ -164,6 +164,13 @@ a { color: inherit; }
 .blend .lab { position: absolute; inset: 0; display: grid; grid-template-columns: var(--cols); }
 .blend .lab span { display: flex; align-items: center; padding: 0 12px; font: 600 12px/1 var(--sans); color: rgba(0,0,0,.72); white-space: nowrap; overflow: hidden; text-shadow: 0 1px 0 rgba(255,255,255,.35); }
 .blend .lab span.lt { color: rgba(255,255,255,.95); text-shadow: 0 1px 1px rgba(0,0,0,.25); }
+/* small Cups / Grams switch inside a card */
+.sech:has(.seg) { align-items: center; }
+.sech .h2 .cap { margin-left: 8px; font-weight: 500; }
+.seg.sm { padding: 3px; background: var(--surface-2); flex: none; }
+.seg.sm button { height: 28px; padding: 0 11px; font-size: 13px; }
+.seg.sm .th { top: 3px; left: 3px; height: 28px; width: calc((100% - 6px) / var(--n)); background: var(--surface); }
+.gnote { margin: 10px 0 0; }
 .batchrow { margin-top: 12px; display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 12px; padding: 8px 8px 8px 16px; border-radius: 20px; }
 .batchrow .seg { width: 100%; }
 .batchrow .seg button { padding: 0; font-variant-numeric: tabular-nums; }
@@ -350,20 +357,22 @@ const ING = {
   capsicum: ['Red capsicum', 'produce', 'buy'], pumpkin: ['Pumpkin seeds', 'seeds'], hemp: ['Hemp seeds', 'seeds'], chia: ['Chia seeds', 'seeds'],
   lemon: ['Lemon', 'produce'], almondbutter: ['Almond butter', 'pantry'], protein: ['Protein powder (unflavoured)', 'protein'], spinach: ['Spinach', 'produce', 'wash'],
   parsley: ['Parsley', 'produce'], coriander: ['Coriander', 'produce'], oliveoil: ['Extra-virgin olive oil', 'pantry'], orange: ['Orange', 'produce'],
-  mango: ['Mango', 'produce', 'safe'], coffee: ['Brewed coffee', 'pantry'], coconutmilk: ['Coconut milk (unsweetened)', 'dairy'], turmeric: ['Ground turmeric', 'pantry'], water: ['Water', 'skip'], ice: ['Ice', 'skip'], salt: ['Sea salt', 'skip'],
+  mango: ['Mango', 'produce', 'safe'], coffee: ['Brewed coffee', 'pantry'], coconutmilk: ['Coconut milk (unsweetened)', 'dairy'], turmeric: ['Ground turmeric', 'pantry'],
+  cauliflower: ['Cauliflower', 'produce', 'safe'], courgette: ['Courgette', 'produce'], cocoyog: ['Coconut yoghurt', 'dairy'], blackbeans: ['Black beans (tinned)', 'pantry'],
+  water: ['Water', 'skip'], ice: ['Ice', 'skip'], salt: ['Sea salt', 'skip'],
 };
 const AISLE = { produce: 'Fruit & veg', dairy: 'Milks, yogurt & tofu', pantry: 'Pantry', seeds: 'Nuts & seeds', protein: 'Protein powders' };
 
 const R = [
  { id: 'farmers-market', name: 'Farmers Market Smoothie', c: '#9BC24C', src: 'Printed recipe sheet', tags: ['green', 'fruity'],
    ing: [
-    { k: 'cucumber', q: [1], t: '{0} cup chopped cucumber (about 1 large cucumber; skin on if unwaxed, peel if waxed)' },
-    { k: 'squash', q: [0.5], t: '{0} cup chopped yellow squash (about ½ of one squash)' },
-    { k: 'romaine', q: [2], t: '{0} handfuls organic romaine lettuce' },
-    { k: 'celery', q: [2], t: '{0} cups chopped organic celery (about 2–3 stalks)' },
-    { k: 'pineapple', q: [2], t: '{0} cups cubed pineapple (frozen, fresh, or BPA-free canned in its own juice and drained)' },
-    { k: 'mint', q: [2], t: '{0} tablespoons fresh mint leaves' },
-    { k: 'water', q: [0.5], t: '{0} cup water' },
+    { k: 'cucumber', q: [1], t: '{0} cup chopped cucumber (about 1 large cucumber; skin on if unwaxed, peel if waxed)', g: 130 },
+    { k: 'squash', q: [0.5], t: '{0} cup chopped yellow squash (about ½ of one squash)', g: 65 },
+    { k: 'romaine', q: [2], t: '{0} handfuls organic romaine lettuce', g: 60 },
+    { k: 'celery', q: [2], t: '{0} cups chopped organic celery (about 2–3 stalks)', g: 200 },
+    { k: 'pineapple', q: [2], t: '{0} cups cubed pineapple (frozen, fresh, or BPA-free canned in its own juice and drained)', g: 330 },
+    { k: 'mint', q: [2], t: '{0} tablespoons fresh mint leaves', g: 3 },
+    { k: 'water', q: [0.5], t: '{0} cup water', g: 120 },
     { k: 'ice', t: 'Ice, as desired', opt: 1 } ],
    steps: [
     'Add everything except the ice to a blender and blend until smooth. Without a high-speed blender you may need to scrape down the sides and blend a few more times to get it creamy.',
@@ -373,39 +382,39 @@ const R = [
 
  { id: 'avo', name: 'Avo', c: '#6E4B33', src: 'Handwritten page', tags: ['chocolate', 'protein'],
    ing: [
-    { k: 'milk', q: [1], t: '{0} cup milk' },
-    { k: 'avocado', q: [0.5], t: '{0} large avo' },
-    { k: 'dates', q: [[4, 6]], t: '{0} pitted dates' },
+    { k: 'milk', q: [1], t: '{0} cup milk', g: 245 },
+    { k: 'avocado', q: [0.5], t: '{0} large avo', g: 100 },
+    { k: 'dates', q: [[4, 6]], t: '{0} pitted dates', g: [28, 42] },
     { k: 'cocoa', q: [2.5], t: '{0} unsweetened cocoa powder', unit: 1 },
     { k: 'ice', t: 'Handful of ice cubes' },
-    { k: 'vanilla', q: [1], t: '{0} tsp vanilla extract' },
-    { k: 'banana', q: [1], t: '{0} medium banana{s}' },
-    { k: 'whey', q: [0.25], t: '{0} cup choc. whey protein powder' },
-    { k: 'flax', q: [1], t: '{0} tbsp ground flaxseed' } ],
+    { k: 'vanilla', q: [1], t: '{0} tsp vanilla extract', g: 4 },
+    { k: 'banana', q: [1], t: '{0} medium banana{s}', g: 120 },
+    { k: 'whey', q: [0.25], t: '{0} cup choc. whey protein powder', g: 25 },
+    { k: 'flax', q: [1], t: '{0} tbsp ground flaxseed', g: 7 } ],
    steps: null, },
 
  { id: 'gunners-fuel', name: 'The Gunners’ Fuel', c: '#8B6047', src: 'Family recipe booklet', tags: ['chocolate'],
    ing: [
-    { k: 'banana', q: [1], t: '{0} large banana{s}' },
-    { k: 'milk', q: [0.75, 180], t: '{0} cup ({1n} mL) whole milk' },
-    { k: 'cocoa', q: [3, 21], t: '{0} tbsp ({1n} grams) unsweetened cocoa powder' },
-    { k: 'yogurt', q: [0.75, 170], t: '{0} cup ({1n} grams) full fat plain Greek yogurt' },
-    { k: 'honey', q: [1, 21], t: '{0} tbsp ({1n} grams) honey' },
-    { k: 'pb', q: [1, 16], t: '{0} tbsp ({1n} grams) peanut butter' } ],
+    { k: 'banana', q: [1], t: '{0} large banana{s}', g: 135 },
+    { k: 'milk', q: [0.75, 180], t: '{0} cup ({1n} mL) whole milk', g: 185 },
+    { k: 'cocoa', q: [3, 21], t: '{0} tbsp ({1n} grams) unsweetened cocoa powder', g: 21 },
+    { k: 'yogurt', q: [0.75, 170], t: '{0} cup ({1n} grams) full fat plain Greek yogurt', g: 170 },
+    { k: 'honey', q: [1, 21], t: '{0} tbsp ({1n} grams) honey', g: 21 },
+    { k: 'pb', q: [1, 16], t: '{0} tbsp ({1n} grams) peanut butter', g: 16 } ],
    steps: ['Combine all ingredients in a blender and blend on high speed until thick and smooth.', 'Add the cocoa powder gradually to stop it caking.'],
    nut: [['Calories', '470–500 kcal'], ['Protein', '18–22 g'], ['Fat', '20–23 g'], ['Saturated fat', '9–11 g'], ['Carbohydrates', '45–50 g'], ['Sugars', '25–28 g'], ['Fibre', '6–7 g'], ['Cholesterol', '25–35 mg'], ['Sodium', '90–120 mg'], ['Calcium', '~250–300 mg']],
    kcal: '470–500', protein: '18–22 g' },
 
  { id: 'carrot-kick', name: 'Beck’s Carrot Kick', c: '#F0892E', src: 'Family recipe booklet', tags: ['fruity'],
    ing: [
-    { k: 'carrot', q: [1], t: '{0} cup chopped carrots (steamed and cooled if you don’t have a high-power blender, or to make it extra smooth for kids)' },
-    { k: 'banana', q: [0.5], t: '{0} cup frozen sliced banana' },
-    { k: 'yogurt', q: [0.5], t: '{0} cup plain Greek yogurt' },
-    { k: ['almondmilk', 'milk'], q: [0.5], t: '{0} cup unsweetened vanilla cashew milk, unsweetened vanilla almond milk, or milk of your choice' },
-    { k: 'pineapple', q: [0.25], t: '{0} cup frozen diced pineapple' },
-    { k: 'walnuts', q: [2], t: '{0} tablespoons toasted walnuts' },
-    { k: 'coconut', q: [1], t: '{0} tablespoon flaked coconut', opt: 1 },
-    { k: 'cinnamon', q: [0.25], t: '{0} teaspoon ground cinnamon' },
+    { k: 'carrot', q: [1], t: '{0} cup chopped carrots (steamed and cooled if you don’t have a high-power blender, or to make it extra smooth for kids)', g: 130 },
+    { k: 'banana', q: [0.5], t: '{0} cup frozen sliced banana', g: 75 },
+    { k: 'yogurt', q: [0.5], t: '{0} cup plain Greek yogurt', g: 120 },
+    { k: ['almondmilk', 'milk'], q: [0.5], t: '{0} cup unsweetened vanilla cashew milk, unsweetened vanilla almond milk, or milk of your choice', g: 120 },
+    { k: 'pineapple', q: [0.25], t: '{0} cup frozen diced pineapple', g: 40 },
+    { k: 'walnuts', q: [2], t: '{0} tablespoons toasted walnuts', g: 15 },
+    { k: 'coconut', q: [1], t: '{0} tablespoon flaked coconut', opt: 1, g: 5 },
+    { k: 'cinnamon', q: [0.25], t: '{0} teaspoon ground cinnamon', g: 0.7 },
     { k: 'nutmeg', t: 'Pinch of nutmeg' },
     { k: ['carrot', 'coconut', 'walnuts'], t: 'Shredded carrots, coconut and crushed walnuts, for topping', opt: 1 } ],
    steps: ['Blend all ingredients until smooth.', 'Enjoy straight away, topped with extra shredded carrot, coconut and/or crushed walnuts.'],
@@ -414,26 +423,26 @@ const R = [
 
  { id: 'blueberry-tofu-cloud', name: 'Blueberry Tofu Cloud', c: '#8B6BB5', src: 'Family recipe booklet', tags: ['fruity', 'protein', 'dairyfree'],
    ing: [
-    { k: 'tofu', q: [1, 260], t: '{0} cup ({1n} grams) silken tofu' },
-    { k: 'soymilk', q: [1, 240], t: '{0} cup ({1n} mL) unsweetened soy milk' },
-    { k: 'banana', q: [1], t: '{0} medium banana{s}' },
-    { k: 'ice', q: [[2, 3]], t: '{0} ice cubes', opt: 1 },
-    { k: 'blueberries', q: [1, 190], t: '{0} cup ({1n} grams) fresh or frozen blueberries' },
-    { k: 'honey', q: [1, 21], t: '{0} tbsp ({1n} grams) honey' } ],
+    { k: 'tofu', q: [1, 260], t: '{0} cup ({1n} grams) silken tofu', g: 260 },
+    { k: 'soymilk', q: [1, 240], t: '{0} cup ({1n} mL) unsweetened soy milk', g: 245 },
+    { k: 'banana', q: [1], t: '{0} medium banana{s}', g: 120 },
+    { k: 'ice', q: [[2, 3]], t: '{0} ice cubes', opt: 1, g: [50, 75] },
+    { k: 'blueberries', q: [1, 190], t: '{0} cup ({1n} grams) fresh or frozen blueberries', g: 190 },
+    { k: 'honey', q: [1, 21], t: '{0} tbsp ({1n} grams) honey', g: 21 } ],
    steps: ['Drain the tofu to remove excess water.', 'Blend the tofu, milk, banana and ice (if using) for 30 seconds.', 'Add the blueberries and honey and blend until smooth.'],
    nut: [['Calories', '738'], ['Fat', '38 g'], ['Saturated fat', '10 g'], ['Cholesterol', '0 mg'], ['Fibre', '20 g'], ['Protein', '35 g'], ['Carbohydrates', '45 g'], ['Sodium', '180 mg']],
    kcal: '738', protein: '35 g' },
 
  { id: 'protein-sludge-bowl', name: 'Protein Sludge Bowl', c: '#6A4231', src: 'Family recipe booklet', tags: ['chocolate', 'protein', 'bowl'],
    ing: [
-    { k: ['pea', 'whey'], q: [2], t: '{0} scoops protein (1 scoop pea protein vanilla & 1 scoop chocolate whey)' },
-    { k: 'flax', q: [1], t: '{0} TB ground flax seed' },
-    { k: ['cacao', 'cocoa'], q: [1], t: '{0} TB raw cacao powder' },
-    { k: 'honey', q: [1], t: '{0} TB honey' },
-    { k: ['nutbutter', 'pb', 'almondbutter'], q: [1], t: '{0} TB nut butter' },
-    { k: 'nibs', q: [1], t: '{0} TB cacao nibs' },
-    { k: 'coconut', q: [2], t: '{0} TB coconut flakes' },
-    { k: 'banana', q: [1], t: '{0} banana{s}' },
+    { k: ['pea', 'whey'], q: [2], t: '{0} scoops protein (1 scoop pea protein vanilla & 1 scoop chocolate whey)', g: 60 },
+    { k: 'flax', q: [1], t: '{0} TB ground flax seed', g: 7 },
+    { k: ['cacao', 'cocoa'], q: [1], t: '{0} TB raw cacao powder', g: 7 },
+    { k: 'honey', q: [1], t: '{0} TB honey', g: 21 },
+    { k: ['nutbutter', 'pb', 'almondbutter'], q: [1], t: '{0} TB nut butter', g: 16 },
+    { k: 'nibs', q: [1], t: '{0} TB cacao nibs', g: 9 },
+    { k: 'coconut', q: [2], t: '{0} TB coconut flakes', g: 10 },
+    { k: 'banana', q: [1], t: '{0} banana{s}', g: 120 },
     { k: ['almondmilk', 'milk'], t: 'Milk or milk substitute' } ],
    steps: ['In a small or medium bowl, combine the protein powder, ground flax seed and cacao.', 'Slowly add almond milk until it reaches a thick, pudding-like consistency (about 3–4 TB).', 'If you can, put the sludge in the fridge for 10–15 minutes.', 'Once it’s thick and fully combined, top with peanut butter, honey, cacao nibs, coconut flakes and sliced banana. Enjoy!'],
    timer: { step: 2, min: 10, label: 'Fridge timer' },
@@ -443,31 +452,31 @@ const R = [
 
  { id: 'body-builder', name: '1000 Calorie Body Builder', c: '#E09A8C', src: 'Family recipe booklet', tags: ['fruity', 'protein'],
    ing: [
-    { k: 'strawberries', q: [0.5, 72], t: '{0} cup ({1n} grams) frozen strawberries' },
-    { k: 'pb', q: [3], t: '{0} tbsp peanut butter' },
-    { k: 'banana', q: [1], t: '{0} large banana{s}' },
-    { k: 'honey', q: [1.5], t: '{0} tbsp honey' },
-    { k: 'oats', q: [1, 80], t: '{0} cup ({1n} grams) oats' },
-    { k: 'whey', q: [2], t: '{0} scoops whey protein powder' },
-    { k: 'almondmilk', q: [1.5, 360], t: '{0} cups ({1n} mL) almond milk' } ],
+    { k: 'strawberries', q: [0.5, 72], t: '{0} cup ({1n} grams) frozen strawberries', g: 72 },
+    { k: 'pb', q: [3], t: '{0} tbsp peanut butter', g: 48 },
+    { k: 'banana', q: [1], t: '{0} large banana{s}', g: 135 },
+    { k: 'honey', q: [1.5], t: '{0} tbsp honey', g: 32 },
+    { k: 'oats', q: [1, 80], t: '{0} cup ({1n} grams) oats', g: 80 },
+    { k: 'whey', q: [2], t: '{0} scoops whey protein powder', g: 60 },
+    { k: 'almondmilk', q: [1.5, 360], t: '{0} cups ({1n} mL) almond milk', g: 365 } ],
    steps: ['Add the ingredients to the jar of a high-speed blender in the order listed, top to bottom.', 'Blend until smooth and free of chunks.'],
    nut: [['Calories', '1,117 kcal'], ['Carbs', '132.5 g'], ['Sugars', '53 g'], ['Fibre', '17 g'], ['Protein', '73.5 g'], ['Fat', '35.1 g']],
    kcal: '1,117', protein: '73.5 g' },
 
  { id: 'low-gi-alkaliser', name: 'Low-GI Alkaliser', c: '#5E9A3C', src: 'Family recipe booklet', tags: ['green', 'dairyfree'],
    ing: [
-    { k: ['greens', 'spinach', 'romaine'], q: [2], t: '{0} cups dark leafy greens' },
-    { k: 'cucumber', q: [0.5], t: '{0} cucumber, roughly chopped' },
-    { k: 'avocado', q: [0.5], t: '{0} avocado' },
-    { k: 'ginger', q: [1], t: '{0} teaspoon grated ginger' },
-    { k: 'mint', q: [1], t: '{0} tablespoon mint leaves' },
-    { k: 'capsicum', q: [0.5], t: '{0} red bell pepper (capsicum), roughly chopped' },
-    { k: 'blueberries', q: [0.5], t: '{0} cup blueberries' },
-    { k: 'pumpkin', q: [3], t: '{0} tablespoons pumpkin seeds' },
-    { k: 'hemp', q: [2], t: '{0} tablespoons hemp seeds' },
-    { k: 'chia', q: [1], t: '{0} tablespoon chia seeds' },
-    { k: 'lemon', q: [0.5], t: 'Juice of {0} lemon' },
-    { k: 'water', q: [2], t: '{0} cups filtered water' } ],
+    { k: ['greens', 'spinach', 'romaine'], q: [2], t: '{0} cups dark leafy greens', g: 60 },
+    { k: 'cucumber', q: [0.5], t: '{0} cucumber, roughly chopped', g: 150 },
+    { k: 'avocado', q: [0.5], t: '{0} avocado', g: 75 },
+    { k: 'ginger', q: [1], t: '{0} teaspoon grated ginger', g: 2 },
+    { k: 'mint', q: [1], t: '{0} tablespoon mint leaves', g: 2 },
+    { k: 'capsicum', q: [0.5], t: '{0} red bell pepper (capsicum), roughly chopped', g: 75 },
+    { k: 'blueberries', q: [0.5], t: '{0} cup blueberries', g: 75 },
+    { k: 'pumpkin', q: [3], t: '{0} tablespoons pumpkin seeds', g: 27 },
+    { k: 'hemp', q: [2], t: '{0} tablespoons hemp seeds', g: 20 },
+    { k: 'chia', q: [1], t: '{0} tablespoon chia seeds', g: 12 },
+    { k: 'lemon', q: [0.5], t: 'Juice of {0} lemon', g: 20, gt: 'lemon juice' },
+    { k: 'water', q: [2], t: '{0} cups filtered water', g: 480 } ],
    steps: ['Mix all ingredients together in a blender.'],
    nut: [['Calories', '~375–400 kcal'], ['Protein', '~12–14 g'], ['Fat', '~28–30 g'], ['Saturated fat', '~3 g'], ['Carbohydrates', '~24–26 g'], ['Sugars', '~6–8 g'], ['Fibre', '~12–15 g'], ['Sodium', '~60–80 mg'], ['Calcium', '~150–200 mg'], ['Iron', '~4–5 mg'], ['Magnesium', '~150–180 mg'], ['Omega-3s (ALA)', '~4–5 g']],
    nutNote: 'Protein mainly from the hemp, chia and pumpkin seeds; sugars from the blueberries and red pepper; omega-3s mainly from the chia and hemp seeds.',
@@ -475,16 +484,16 @@ const R = [
 
  { id: 'spicy-green', name: 'Spicy Green Super Smoothie', c: '#7DB244', src: 'Family recipe booklet', tags: ['green', 'protein'],
    ing: [
-    { k: 'ginger', q: [0.5], t: '{0}-inch piece fresh ginger, peeled' },
-    { k: 'cinnamon', q: [0.5], t: '{0} teaspoon cinnamon' },
-    { k: 'chia', q: [1], t: '{0} tablespoon chia seeds' },
-    { k: 'almondbutter', q: [1], t: '{0} tablespoon almond butter' },
-    { k: 'coconut', q: [1], t: '{0} ounce fresh coconut' },
-    { k: ['greens', 'spinach'], q: [2], t: '{0} handfuls of leafy greens (spinach, kale, arugula)' },
-    { k: 'almondmilk', q: [1.5], t: '{0} cup unsweetened almond milk' },
-    { k: 'mint', q: [5], t: '{0} fresh mint leaves' },
-    { k: 'ice', q: [2], t: '{0} ice cubes' },
-    { k: ['protein', 'whey', 'pea'], q: [1], t: '{0} scoop of unflavored protein powder' } ],
+    { k: 'ginger', q: [0.5], t: '{0}-inch piece fresh ginger, peeled', g: 5 },
+    { k: 'cinnamon', q: [0.5], t: '{0} teaspoon cinnamon', g: 1.3 },
+    { k: 'chia', q: [1], t: '{0} tablespoon chia seeds', g: 12 },
+    { k: 'almondbutter', q: [1], t: '{0} tablespoon almond butter', g: 16 },
+    { k: 'coconut', q: [1], t: '{0} ounce fresh coconut', g: 28 },
+    { k: ['greens', 'spinach'], q: [2], t: '{0} handfuls of leafy greens (spinach, kale, arugula)', g: 60 },
+    { k: 'almondmilk', q: [1.5], t: '{0} cup unsweetened almond milk', g: 365 },
+    { k: 'mint', q: [5], t: '{0} fresh mint leaves', g: 1 },
+    { k: 'ice', q: [2], t: '{0} ice cubes', g: 50 },
+    { k: ['protein', 'whey', 'pea'], q: [1], t: '{0} scoop of unflavored protein powder', g: 30 } ],
    steps: ['Mix all ingredients together in a blender.'],
    mum: 'Needs some blueberries or banana as flavour. Chocolate?',
    nut: [['Calories', '431'], ['Total fat', '27 g'], ['Saturated fat', '9 g'], ['Cholesterol', '45 mg'], ['Fibre', '10 g'], ['Protein', '30 g'], ['Carbohydrates', '19 g'], ['Sodium', '425 mg'], ['Sugars', '4 g'], ['Net carbs', '9 g']],
@@ -493,14 +502,14 @@ const R = [
  { id: 'post-sauna', name: 'The ‘Post-Sauna’ Raumati Rejuvenator', c: '#6FA53D', src: 'Family recipe booklet', tags: ['green', 'dairyfree'],
    quote: 'This is probably the healthiest smoothie in the whole world.',
    ing: [
-    { k: 'lemon', q: [1], t: '{0} lemon{s}, quartered (washed and unpeeled)' },
-    { k: 'avocado', q: [1], t: '{0} whole avocado{s}, peeled and pitted' },
-    { k: 'celery', q: [2], t: '{0} stalks celery' },
-    { k: 'spinach', q: [2], t: '{0} cups spinach' },
-    { k: 'parsley', q: [0.5], t: '{0} bunch parsley' },
-    { k: 'coriander', q: [0.5], t: '{0} bunch coriander' },
-    { k: 'cucumber', q: [1], t: '{0} organic cucumber{s} (washed and unpeeled)' },
-    { k: 'oliveoil', q: [1], t: '{0} teaspoon organic extra-virgin olive oil' },
+    { k: 'lemon', q: [1], t: '{0} lemon{s}, quartered (washed and unpeeled)', g: 110 },
+    { k: 'avocado', q: [1], t: '{0} whole avocado{s}, peeled and pitted', g: 150 },
+    { k: 'celery', q: [2], t: '{0} stalks celery', g: 80 },
+    { k: 'spinach', q: [2], t: '{0} cups spinach', g: 60 },
+    { k: 'parsley', q: [0.5], t: '{0} bunch parsley', g: 30 },
+    { k: 'coriander', q: [0.5], t: '{0} bunch coriander', g: 30 },
+    { k: 'cucumber', q: [1], t: '{0} organic cucumber{s} (washed and unpeeled)', g: 300 },
+    { k: 'oliveoil', q: [1], t: '{0} teaspoon organic extra-virgin olive oil', g: 5 },
     { k: 'salt', t: 'Pinch of sea salt' },
     { k: 'water', t: 'Water as needed' } ],
    steps: ['Mix all ingredients together in a blender.'],
@@ -509,23 +518,23 @@ const R = [
 
  { id: 'turmeric-tango', name: 'The Tumeric Tango', c: '#F2A51F', src: 'Family recipe booklet', tags: ['fruity', 'dairyfree'],
    ing: [
-    { k: 'ginger', q: [1], t: '{0} inch ginger root, peeled' },
-    { k: 'orange', q: [1], t: '{0} orange{s}, peeled and zested' },
-    { k: ['almondmilk', 'milk'], q: [0.75], t: '{0} cup almond milk or other nut milk' },
-    { k: 'mango', q: [0.5], t: '{0} cup frozen mango' },
-    { k: 'carrot', q: [0.5], t: '{0} cup sliced carrots, frozen' },
-    { k: 'honey', q: [1], t: '{0} tbsp raw honey' },
-    { k: 'turmeric', q: [1], t: '{0} tsp ground turmeric' } ],
+    { k: 'ginger', q: [1], t: '{0} inch ginger root, peeled', g: 10 },
+    { k: 'orange', q: [1], t: '{0} orange{s}, peeled and zested', g: 130 },
+    { k: ['almondmilk', 'milk'], q: [0.75], t: '{0} cup almond milk or other nut milk', g: 180 },
+    { k: 'mango', q: [0.5], t: '{0} cup frozen mango', g: 80 },
+    { k: 'carrot', q: [0.5], t: '{0} cup sliced carrots, frozen', g: 65 },
+    { k: 'honey', q: [1], t: '{0} tbsp raw honey', g: 21 },
+    { k: 'turmeric', q: [1], t: '{0} tsp ground turmeric', g: 3 } ],
    steps: ['Combine all ingredients in a blender and blend on high speed until thick and smooth.', 'Add the cocoa powder gradually to stop it caking.'],
    nut: [['Calories', '470–500 kcal'], ['Protein', '18–22 g'], ['Fat', '20–23 g'], ['Saturated fat', '9–11 g'], ['Carbohydrates', '45–50 g'], ['Sugars', '25–28 g'], ['Fibre', '6–7 g'], ['Cholesterol', '25–35 mg'], ['Sodium', '90–120 mg'], ['Calcium', '~250–300 mg']],
    kcal: '470–500', protein: '18–22 g' },
  { id: 'peter-colada', name: 'Peter-Colada Protein Smoothie', c: '#F1E1A4', src: 'Family recipe booklet', tags: ['fruity', 'protein'],
    ing: [
-    { k: 'pineapple', q: [1], t: '{0} cup fresh or frozen pineapple chunks' },
-    { k: 'banana', q: [0.5], t: '{0} frozen banana' },
-    { k: 'coconutmilk', q: [0.75], t: '{0} cup unsweetened coconut milk' },
-    { k: ['whey', 'protein'], q: [1], t: '{0} scoop vanilla protein powder (vanilla whey)' },
-    { k: 'ice', q: [1], t: '{0} handful ice cubes' } ],
+    { k: 'pineapple', q: [1], t: '{0} cup fresh or frozen pineapple chunks', g: 165 },
+    { k: 'banana', q: [0.5], t: '{0} frozen banana', g: 60 },
+    { k: 'coconutmilk', q: [0.75], t: '{0} cup unsweetened coconut milk', g: 180 },
+    { k: ['whey', 'protein'], q: [1], t: '{0} scoop vanilla protein powder (vanilla whey)', g: 30 },
+    { k: 'ice', q: [1], t: '{0} handful ice cubes', g: 125 } ],
    steps: ['Add all of the ingredients to a blender and blend on high until smooth.', 'Pour into a glass and drink straight away!'],
    nut: [['Calories', '255 kcal'], ['Fat', '6 g'], ['Saturated fat', '5 g'], ['Cholesterol', '25 mg'], ['Fibre', '3 g'], ['Protein', '20–25 g'], ['Carbohydrates', '27 g'], ['Sugars', '15–18 g'], ['Sodium', '90–150 mg']],
    nutNote: 'Cholesterol comes from the whey protein. Protein depends on the protein powder; sugars come from the banana and pineapple; sodium depends on the brand of protein and coconut milk.',
@@ -534,16 +543,30 @@ const R = [
  { id: 'muscle-mocha', name: 'The Muscle Mocha', c: '#A8744A', src: 'Family recipe booklet', tags: ['chocolate', 'protein'],
    quote: 'A caffeine boost and a way to get your protein in? Yes, please!',
    ing: [
-    { k: 'coffee', q: [1], t: '{0} cup brewed coffee' },
-    { k: 'banana', q: [1], t: '{0} banana{s}' },
-    { k: ['whey', 'protein', 'pea'], q: [1], t: '{0} scoop protein powder (chocolate whey for the mocha style!)' },
-    { k: 'ice', q: [1], t: '{0} handful ice cubes' },
-    { k: ['almondmilk', 'milk'], q: [0.5], t: '{0} cup unsweetened vanilla almond milk' },
-    { k: ['cacao', 'cocoa'], q: [1], t: '{0} TB cacao powder', opt: 1 },
-    { k: 'nibs', q: [2], t: '{0} TB cacao nibs, to garnish' } ],
+    { k: 'coffee', q: [1], t: '{0} cup brewed coffee', g: 240 },
+    { k: 'banana', q: [1], t: '{0} banana{s}', g: 120 },
+    { k: ['whey', 'protein', 'pea'], q: [1], t: '{0} scoop protein powder (chocolate whey for the mocha style!)', g: 30 },
+    { k: 'ice', q: [1], t: '{0} handful ice cubes', g: 125 },
+    { k: ['almondmilk', 'milk'], q: [0.5], t: '{0} cup unsweetened vanilla almond milk', g: 120 },
+    { k: ['cacao', 'cocoa'], q: [1], t: '{0} TB cacao powder', opt: 1, g: 7 },
+    { k: 'nibs', q: [2], t: '{0} TB cacao nibs, to garnish', g: 18 } ],
    steps: ['Add all the ingredients except the cacao nibs to a blender and blend on medium speed until smooth.', 'Garnish with the cacao nibs and enjoy straight away!'],
    nut: [['Protein', '45–50 g'], ['Fat', '28–32 g'], ['Saturated fat', '7–9 g'], ['Carbohydrates', '75–80 g'], ['Sugars', '30–35 g'], ['Fibre', '8–10 g'], ['Cholesterol', '70–90 mg'], ['Sodium', '200–250 mg'], ['Calcium', '~350–400 mg']],
    protein: '45–50 g' },
+
+ { id: 'choc-full-of-beans', name: 'Choc Full of Beans Smoothie', c: '#5E3F2E', tags: ['chocolate'], serves: 2, mins: 5,
+   ing: [
+    { k: 'banana', q: [1], t: '{0} frozen banana{s}, roughly chopped', g: 120 },
+    { k: ['milk', 'almondmilk', 'soymilk', 'coconutmilk'], q: [0.75], t: '{0} cup milk of choice', g: 185 },
+    { k: ['cauliflower', 'courgette'], q: [0.5], t: '{0} cup frozen raw cauliflower and/or courgette, roughly chopped', g: 65 },
+    { k: 'cocoyog', q: [0.25], t: '{0} cup coconut yoghurt (or omit)', opt: 1, g: 60 },
+    { k: 'hemp', q: [1], t: '{0} tablespoon hemp seeds', g: 10 },
+    { k: 'blackbeans', q: [1 / 3], t: '{0} cup tinned black beans, drained and rinsed', g: 57 },
+    { k: 'cacao', q: [1], t: '{0} tablespoon raw cacao powder', g: 7 },
+    { k: 'cinnamon', q: [0.25], t: '{0} teaspoon ground cinnamon', g: 0.7 },
+    { k: 'dates', q: [2], t: '{0} Medjool date{s}, pitted (one optional for extra sweetness)', g: 45 },
+    { k: 'salt', t: 'Pinch of salt' } ],
+   steps: null },
 ];
 
 /* Organic guide, from Dr Brad Leech’s handout, with Mum’s pencil marks. */
@@ -568,7 +591,7 @@ const GUIDE = {
     ['Mangoes', 'Thick peel.', ['mango']],
     ['Onions & garlic', 'Naturally repel pests.', []],
     ['Cabbage', 'Relatively low pesticide use.', []],
-    ['Broccoli & cauliflower', 'Naturally pest-resistant.', []],
+    ['Broccoli & cauliflower', 'Naturally pest-resistant.', ['cauliflower']],
     ['Mushrooms', 'Usually grown indoors with less chemical exposure.', []] ],
 };
 const TAGS = [['green', 'Green'], ['fruity', 'Fruity'], ['chocolate', 'Chocolate'], ['protein', 'Protein'], ['dairyfree', 'Dairy-free']];
@@ -584,7 +607,7 @@ const store = {
   set(k, v) { try { localStorage.setItem('fs.' + k, JSON.stringify(v)); } catch {} },
 };
 let favs = new Set(store.get('favs', []));
-let list = store.get('list', []).filter(x => BY[x.id]);           // [{id, x}]
+let list = store.get('list', []).filter(x => BY[x.id]).map(x => ({ ...x, x: Math.min(x.x, 3) }));   // [{id, x}]; 3× is the largest batch now
 let listTicks = store.get('ticks', {});
 let fridge = new Set(store.get('fridge', []));
 let query = '';
@@ -600,15 +623,36 @@ function frac(x) {
   if (best[0] === 1) return String(w + 1);
   return (w ? w : '') + best[1] || '0';
 }
-const plain = x => x >= 10 ? String(Math.round(x)) : String(Math.round(x * 10) / 10);
+const plain = x => x >= 2 ? String(Math.round(x)) : String(Math.round(x * 10) / 10);
 const fv = (v, s, p) => Array.isArray(v) ? (p ? plain(v[0] * s) + '–' + plain(v[1] * s) : frac(v[0] * s) + '–' + frac(v[1] * s)) : (p ? plain(v * s) : frac(v * s));
+/* When a smaller batch makes an amount tiny, say it in the next kitchen measure down (⅛ cup → 2 tablespoons,
+   ¾ tbsp → 2¼ tsp, a smidge of a teaspoon → a pinch). At 1× every line reads exactly as written. */
+const DOWN = { cup: ['tablespoon', 16, .25], tablespoon: ['teaspoon', 3, 1], tbsp: ['tsp', 3, 1], TB: ['tsp', 3, 1] };
+/* Grams mode: put the blender jug on the scales and weigh each line in. A line with no weight, or one too small
+   for kitchen scales (under 3 g), keeps its written measure. */
+let UNITS = store.get('units', 'cups');
+const MEASURE = /^\{0\}(?:-inch piece|[ -](?:cups?|tablespoons?|tbsp|TB|teaspoons?|tsp|scoops?|handfuls?|stalks?|bunch|ounce|inch))?(?: of)? ?/;
+const roundG = x => x >= 100 ? Math.round(x / 5) * 5 : Math.round(x);
+function gramText(i, s) {
+  const [lo, hi] = (Array.isArray(i.g) ? i.g : [i.g, i.g]).map(x => roundG(x * s));
+  if (i.g == null || hi < 3) return null;
+  const name = i.gt ? esc(i.gt) : esc(i.t).replace(MEASURE, '').replace(/\(\{1n\} (?:grams|mL)\) /, '').replace('{s}', i.q && i.q[0] > 1 ? 's' : '');   // two dates stay 'dates'
+  return `${lo === hi ? lo : lo + '–' + hi} g ${name}`;
+}
 function ingText(i, s) {
-  if (!i.q) return esc(i.t) + (s !== 1 ? ` <em class="muted">(×${frac(s)})</em>` : '');
-  const first = Array.isArray(i.q[0]) ? i.q[0][1] * s : i.q[0] * s;
-  let t = esc(i.t);
+  if (UNITS === 'g') { const g = gramText(i, s); if (g) return g; }
+  if (!i.q) return esc(i.t) + (s !== 1 && !/^pinch/i.test(i.t) ? ` <em class="muted">(×${frac(s)})</em>` : '');
+  let t = esc(i.t), q = i.q;
+  const m = s !== 1 && !Array.isArray(q[0]) && t.match(/\{0\}( |-)(cup|tablespoon|tbsp|TB|teaspoon|tsp)s?\b ?/);
+  if (m) {
+    const u = m[2], v = q[0] * s, d = DOWN[u];
+    if (d && v < d[2]) { t = t.replace(m[0], `{0}${m[1]}${d[0]} `); q = [q[0] * d[1], ...q.slice(1)]; }   // only the first amount changes unit
+    else if ((u === 'teaspoon' || u === 'tsp') && v < .1) t = t.replace(m[0], 'Pinch of ');
+  }
+  const first = Array.isArray(q[0]) ? q[0][1] * s : q[0] * s;
   /* keep the unit after the first amount in step with the amount: 1 cup / 2 cups */
   t = t.replace(/\{0\}( |-)(cup|tablespoon|teaspoon|handful|scoop|stalk|bunch|ounce)(s?)\b/, (_, sp, u) => `{0}${sp}${u}${first > 1 && sp === ' ' ? 's' : ''}`);
-  return t.replace(/\{(\d)(n?)\}/g, (_, n, p) => fv(i.q[+n], s, !!p)).replace('{s}', first > 1 ? 's' : '');
+  return t.replace(/\{(\d)(n?)\}/g, (_, n, p) => fv(q[+n], s, !!p)).replace('{s}', first > 1 ? 's' : '');
 }
 const keysOf = i => Array.isArray(i.k) ? i.k : [i.k];
 const organic = i => { for (const k of keysOf(i)) { const g = ING[k]; if (g && g[2]) return g[2]; } return null; };
@@ -625,10 +669,11 @@ const KCOL = { cucumber: '#6E9B48', squash: '#F0D36A', romaine: '#8DBA5A', celer
   carrot: '#EE7C1E', almondmilk: '#EDE6D6', walnuts: '#9C7348', coconut: '#F5F1E8', cinnamon: '#8A4A1E', nutmeg: '#7A4A2A', tofu: '#F1ECE0', soymilk: '#E9E1CC',
   blueberries: '#3B3F7A', pea: '#E3D7BC', cacao: '#3B2416', nibs: '#3A2114', nutbutter: '#B57E47', strawberries: '#D63447', oats: '#D9C79C', greens: '#3E6E2E',
   ginger: '#E7C98A', capsicum: '#D7392B', pumpkin: '#4F7A33', hemp: '#D8D2A6', chia: '#4A4641', lemon: '#F2D64B', almondbutter: '#C9A06A', protein: '#E6DCC8',
-  spinach: '#3E6E2E', parsley: '#4E8A34', coriander: '#5A9A3C', oliveoil: '#B8A030', orange: '#F08A12', mango: '#F6B73C', turmeric: '#D98A0A', coffee: '#4A2814', coconutmilk: '#F4F0E6' };
+  spinach: '#3E6E2E', parsley: '#4E8A34', coriander: '#5A9A3C', oliveoil: '#B8A030', orange: '#F08A12', mango: '#F6B73C', turmeric: '#D98A0A', coffee: '#4A2814', coconutmilk: '#F4F0E6',
+  cauliflower: '#EDE6D2', courgette: '#5E8A3A', cocoyog: '#F4F0E6', blackbeans: '#2A2226' };
 const SHORT = { almondmilk: 'Almond milk', yogurt: 'Greek yogurt', cocoa: 'Cocoa', whey: 'Whey protein', pea: 'Pea protein', protein: 'Protein powder', soymilk: 'Soy milk',
   tofu: 'Silken tofu', greens: 'Leafy greens', capsicum: 'Red capsicum', coconutmilk: 'Coconut milk', pb: 'Peanut butter', nutbutter: 'Nut butter', dates: 'Dates',
-  flax: 'Flaxseed', cacao: 'Cacao', coffee: 'Coffee', romaine: 'Romaine', squash: 'Yellow squash', mint: 'Mint' };
+  flax: 'Flaxseed', cacao: 'Cacao', coffee: 'Coffee', romaine: 'Romaine', squash: 'Yellow squash', mint: 'Mint', cocoyog: 'Coconut yoghurt', blackbeans: 'Black beans' };
 /* rough volume of each line in cups, so the bands can be sized by how much goes in.
    Counted items use typical sizes; a bare number with no unit (Avo’s “2½” cocoa) is read as tablespoons. */
 const UNIT = { cup: 1, cups: 1, tablespoon: 1 / 16, tablespoons: 1 / 16, tbsp: 1 / 16, TB: 1 / 16, teaspoon: 1 / 48, tsp: 1 / 48, scoop: 1 / 3, scoops: 1 / 3, handful: .5, handfuls: .5, bunch: 2, stalks: .5, ounce: .25, inch: 1 / 16 };
@@ -905,7 +950,8 @@ async function shareText(text, title) {
   if (navigator.share) { try { await navigator.share({ title, text }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
   try { await navigator.clipboard.writeText(text); toast('Copied to clipboard'); } catch { toast('Couldn’t copy. Select the text instead'); }
 }
-const STEPS = [0.5, 1, 2, 3, 4];
+const STEPS = [0.25, 0.5, 1, 2, 3];
+const xLabel = v => (v === 0.25 ? '¼' : v === 0.5 ? '½' : v) + '×';
 function renderRecipe(r) {
   const idx = R.indexOf(r), prev = R[(idx - 1 + R.length) % R.length], next = R[(idx + 1) % R.length];
   const s = batchOf[r.id] || 1, ticks = tickState[r.id] || (tickState[r.id] = new Set());
@@ -919,16 +965,18 @@ function renderRecipe(r) {
     <section class="hero" style="${grad(r)}"><span class="bgx" style="view-transition-name:card"></span>
       <div class="big"><span class="num" style="font-size:${Math.min(96, Math.floor(600 / Math.max(big.length, 3)))}px">${esc(big)}</span><span class="unit">${unit}</span></div></section>
     <section class="panel glass">
-      <div class="hd"><h1>${esc(r.name)}</h1><span class="src">${esc(SRC[r.src] || r.src)}</span></div>${legend(r)}
+      <div class="hd"><h1>${esc(r.name)}</h1><span class="src">${r.src ? esc(SRC[r.src] || r.src) : r.serves ? `Serves ${r.serves} · ${r.mins} min` : ''}</span></div>${legend(r)}
       <div class="stats"><div><div class="k">Ingredients</div><div class="v">${r.ing.length}</div></div><div><div class="k">Protein</div><div class="v">${r.protein ? esc(r.protein) : '—'}</div></div>
         <div><div class="k">Steps</div><div class="v">${r.steps ? r.steps.length : '—'}</div></div><div><div class="k">Buy organic</div><div class="v">${buys ? buys + (buys > 1 ? ' items' : ' item') : 'None'}</div></div></div>
       <div class="blend"><div class="k cap" style="margin-bottom:6px">Blend by volume</div><div class="bar"><span class="fill" style="--stops:${stops}"></span><span class="lab" style="--cols:${p.map(x => x.p.toFixed(3) + 'fr').join(' ')}">${p.map(x => `<span class="${lum(x.c) < .3 ? 'lt' : ''}">${x.p > .16 ? Math.round(x.p * 100) + '%' : ''}</span>`).join('')}</span></div></div>
     </section>
-    <div class="batchrow glass"><span class="cap" style="color:var(--ink-2)">Batch</span><div class="seg" id="batch" role="radiogroup" aria-label="Batch size" style="--n:5;--i:${STEPS.indexOf(s)}"><span class="th"></span>${STEPS.map(v => `<button role="radio" aria-checked="${v === s}" class="${v === s ? 'on' : ''}" data-x="${v}">${v === 0.5 ? '½' : v}×</button>`).join('')}</div></div>
+    <div class="batchrow glass"><span class="cap" style="color:var(--ink-2)">Batch</span><div class="seg" id="batch" role="radiogroup" aria-label="Batch size" style="--n:5;--i:${STEPS.indexOf(s)}"><span class="th"></span>${STEPS.map(v => `<button role="radio" aria-checked="${v === s}" class="${v === s ? 'on' : ''}" data-x="${v}">${xLabel(v)}</button>`).join('')}</div></div>
     ${r.quote ? `<blockquote class="quote">“${esc(r.quote)}”<span class="cap">From the booklet</span></blockquote>` : ''}
     ${r.mum ? `<div class="note"><span class="cap" style="color:var(--warn)">Mum’s note on this page</span><p>${esc(r.mum)}</p></div>` : ''}
-    <section class="card2"><div class="sech"><h2 class="h2">Ingredients</h2><span class="cap" id="tickcount"></span></div>
+    <section class="card2"><div class="sech"><h2 class="h2">Ingredients<span class="cap" id="tickcount"></span></h2>
+        <div class="seg sm" id="units" role="radiogroup" aria-label="Measure in" style="--n:2;--i:${UNITS === 'g' ? 1 : 0}"><span class="th"></span>${[['cups', 'Cups'], ['g', 'Grams']].map(([u, l]) => `<button role="radio" aria-checked="${UNITS === u}" class="${UNITS === u ? 'on' : ''}" data-u="${u}">${l}</button>`).join('')}</div></div>
       <ul class="ings" id="ings">${paintIngs(r, s, ticks)}</ul>
+      <p class="small muted gnote" id="gnote" ${UNITS === 'g' ? '' : 'hidden'}>Weights are close conversions from cups and spoons. Tiny amounts keep their spoon or pinch.</p>
       <div class="actions"><button class="btn primary ${inList ? 'done' : ''}" id="add">${ICON.bag}<span>${inList ? 'On the list' : 'Add to list'}</span></button>${'wakeLock' in navigator ? `<button class="btn quiet" id="wake">${ICON.sun}<span>Keep screen on</span></button>` : `<button class="btn quiet" id="copy">${ICON.copy}<span>Copy recipe</span></button>`}</div></section>
     <section class="card2"><h2 class="h2">Method</h2>
       ${r.steps ? `<ol class="steps">${r.steps.map((t, n) => `<li><div><p>${esc(t)}</p>${r.timer && r.timer.step === n ? `<button class="btn quiet sm timer" id="timer">${ICON.timer}<span>Start ${r.timer.min}-minute timer</span></button>` : ''}</div></li>`).join('')}</ol>` : `<p style="margin:4px 0 0">Blend everything until smooth.</p>`}</section>
@@ -945,14 +993,25 @@ function renderRecipe(r) {
   $('#share').onclick = () => shareText(recipeText(r, batchOf[r.id] || 1), r.name);
   const cp = $('#copy'); if (cp) cp.onclick = () => shareText(recipeText(r, batchOf[r.id] || 1), r.name);
   const wk = $('#wake'); if (wk) { wk.onclick = toggleWake; paintWake(); }
+  const repaint = () => {
+    const ul = $('#ings'); ul.innerHTML = paintIngs(r, batchOf[r.id] || 1, ticks);
+    if (!REDUCE.matches) ul.querySelectorAll('.tx').forEach((t, i) => t.animate([{ opacity: .2, transform: 'translateX(-4px)' }, { opacity: 1, transform: 'none' }], { duration: 300, delay: i * 18, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'backwards' }));
+  };
   $('#batch').addEventListener('click', e => {
     const b = e.target.closest('[data-x]'); if (!b) return;
     const v = +b.dataset.x; batchOf[r.id] = v;
     $('#batch').querySelectorAll('[data-x]').forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-checked', x === b); });
     slideSeg($('#batch'), STEPS.indexOf(v));
-    const ul = $('#ings'); ul.innerHTML = paintIngs(r, v, ticks);
-    if (!REDUCE.matches) ul.querySelectorAll('.tx').forEach((t, i) => t.animate([{ opacity: .2, transform: 'translateX(-4px)' }, { opacity: 1, transform: 'none' }], { duration: 300, delay: i * 18, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'backwards' }));
+    repaint();
     const l = list.find(x => x.id === r.id); if (l) { l.x = v; saveList(); }
+  });
+  /* Cups / Grams applies everywhere (recipes, the list, shared text) and is remembered */
+  $('#units').addEventListener('click', e => {
+    const b = e.target.closest('[data-u]'); if (!b || b.dataset.u === UNITS) return;
+    UNITS = b.dataset.u; store.set('units', UNITS);
+    $('#units').querySelectorAll('[data-u]').forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-checked', x === b); });
+    slideSeg($('#units'), UNITS === 'g' ? 1 : 0); $('#gnote').hidden = UNITS !== 'g';
+    repaint();
   });
   $('#ings').addEventListener('click', e => { const li = e.target.closest('.ing'); if (!li) return; const n = +li.dataset.n; ticks.has(n) ? ticks.delete(n) : ticks.add(n); li.classList.toggle('ticked', ticks.has(n)); li.setAttribute('aria-checked', ticks.has(n)); if (!calm()) wobble(li.querySelector('.ck'), 'scale(.7)'); tc(); });
   $('#add').onclick = e => {
